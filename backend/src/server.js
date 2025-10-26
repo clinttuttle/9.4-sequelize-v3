@@ -4,7 +4,7 @@ import cors from 'cors';
 import { Sequelize, DataTypes } from 'sequelize';
 
 const app = express();
-app.use(cors());                        // minimal; allows all origins
+// app.use(cors());                        // minimal; allows all origins
 
 app.use(require('cors')({
   origin: 'https://employees-frontend-5l45.onrender.com',
