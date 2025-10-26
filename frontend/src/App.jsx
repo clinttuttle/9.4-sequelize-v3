@@ -11,7 +11,7 @@ export default function App() {
   });
 
   const load = async () => {
-    const res = await api.get('/api/employees');
+    const res = await api.get('/employees');
     setEmployees(res.data);
   };
 
@@ -20,7 +20,7 @@ export default function App() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await api.post('/api/employees', {
+    await api.post('/employees', {
       ...form,
       salary: form.salary === '' ? null : Number(form.salary)
     });
