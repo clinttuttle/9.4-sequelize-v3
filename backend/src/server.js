@@ -4,7 +4,23 @@ import cors from 'cors';
 import { Sequelize, DataTypes } from 'sequelize';
 
 const app = express();
-app.use(cors());                        // minimal; allows all origins
+const ALLOWED_ORIGINS = [
+  'https://employees-frontend-5l45.onrender.com', // your Render frontend origin
+  // add more origins here if you have custom domains later
+];
+
+// app.use(cors());                        // minimal; allows all origins
+app.use(cors({
+  origin(origin, callback) {
+    // allow non-browser calls (no Origin header) and allowlisted origins
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    return callback(new Error(`CORS: Origin ${origin} not allowed`));
+  },
+  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization'],
+  // credentials: true, // ONLY if you send cookies/HTTP auth from the browser
+}));
+
 app.use(express.json());
 
 // Prefer DATABASE_URL; fallback to discrete vars
